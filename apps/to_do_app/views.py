@@ -31,5 +31,5 @@ def update_task(request, task_id):
         task = get_object_or_404(Task, id=task_id)
         task.title = request.POST.get('updated_text') 
         task.save()
-    return redirect('home') # Replace with your home page URL name
+    return redirect('home')
 

@@ -21,7 +21,8 @@
 	        <div class="task">
 	        	{{task.id}}.
 	            {{ task.title }} 
-	            <div class="buttons">
+	            <div class="buttons	">
+	            	
 				    <form id="form-{{ task.id }}" action="{% url 'update_task' task.id %}" method="POST" >
 				        {% csrf_token %}
 				        <input type="hidden" name="updated_text" id="input-{{ task.id }}">
