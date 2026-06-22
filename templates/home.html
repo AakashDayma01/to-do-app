@@ -1,0 +1,45 @@
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'style.css' %}">
+<script src="{% static 'home.js' %}"></script>
+
+<div class="main_div">
+	<h1>My Todo List</h1>
+
+	<form method="POST" action="">
+	    {% csrf_token %} 
+	    {% if error_message %}
+	    {{error_message}}
+	    {% endif  %}
+	    <input type="text" name="text" placeholder="Enter your task here..." >
+	    <button id="add_button" type="submit">Add Task</button>
+	</form>
+
+	<h3>Task List</h3>
+	<div id="task_div">
+	    {% for task in tasks %}
+	        <div class="task">
+	        	{{task.id}}.
+	            {{ task.title }} 
+	            <div class="buttons">
+				    <form id="form-{{ task.id }}" action="{% url 'update_task' task.id %}" method="POST" >
+				        {% csrf_token %}
+				        <input type="hidden" name="updated_text" id="input-{{ task.id }}">
+				        
+				        <button type="button" class="link-button" onclick="askNewText('{{ task.id }}', '{{ task.title|escapejs }}')">Update</button>
+				    </form>
+				    
+				    <form action="{% url 'delete_task' task.id %}" method="POST">
+				        {% csrf_token %}
+				        <button class="link-button" type="submit" onclick="return confirm('Are you sure you want to delete this task?');">
+				            Delete
+				        </button>
+				    </form>
+				</div>
+       
+	        </div>
+	    {% empty %}
+	        <li>No tasks added yet!</li>
+	    {% endfor %}
+	</div>
+</div>
